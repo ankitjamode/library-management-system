@@ -10,6 +10,8 @@ FROM nginx:alpine
 
 WORKDIR /app
 
+COPY requirements.txt .
+
 RUN apk add --no-cache python3 py3-pip && \
     python3 -m venv /venv && \
     /venv/bin/pip install --no-cache-dir /app/requirements.txt && \
