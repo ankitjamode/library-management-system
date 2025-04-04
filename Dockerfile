@@ -1,11 +1,3 @@
-FROM python:3.9 AS build
-
-WORKDIR /app
-
-COPY . /app
-
-RUN pip install --no-cache-dir -r requirements.txt
-
 FROM nginx:alpine
 
 WORKDIR /app
@@ -13,15 +5,14 @@ WORKDIR /app
 COPY requirements.txt .
 
 RUN apk add --no-cache python3 py3-pip && \
-    python3 -m venv /venv && \
-    /venv/bin/pip install --no-cache-dir -r requirements.txt && \
-    /venv/bin/pip install gunicorn
+    /usr/bin/pip3 install --no-cache-dir -r requirements.txt && \
+    /usr/bin/pip3 install gunicorn
+
+COPY . /app
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY --from=build /app /app
-
 EXPOSE 80
 
-CMD ["/venv/bin/gunicorn", "-b", "0.0.0.0:80", "app:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:80", "app:app"]
 
