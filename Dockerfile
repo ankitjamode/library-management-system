@@ -11,7 +11,8 @@ FROM nginx:alpine
 WORKDIR /app
 
 RUN apk add --no-cache python3 py3-pip && \
-    pip3 install gunicorn
+    python3 -m venv /venv && \
+    /venv/bin/pip install gunicorn
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
@@ -19,4 +20,4 @@ COPY --from=build /app /app
 
 EXPOSE 80
 
-CMD ["gunicorn", "-b", "0.0.0.0:80", "app:app"]
+CMD ["/venv/bin/gunicorn", "-b", "0.0.0.0:80", "app:app"]
