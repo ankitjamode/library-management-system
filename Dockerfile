@@ -18,7 +18,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app /app
 
 
-COPY . /app  # This copies all the Python files and other assets into /app (except files in .dockerignore)
+COPY . /app  
 
 
 EXPOSE 80
