@@ -13,6 +13,10 @@ COPY . /app
 
 FROM nginx:alpine
 
+WORKDIR /app
+
+RUN apk add --no-cache python3 py3-pip
+
 COPY nginx.conf /etc/nginx/nginx.conf
 
 
@@ -21,4 +25,4 @@ COPY --from=build /app /app
 EXPOSE 80
 
 
-CMD ["python", "app.py"]
+CMD ["python3", "app.py"]
