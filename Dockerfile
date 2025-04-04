@@ -12,6 +12,7 @@ WORKDIR /app
 
 RUN apk add --no-cache python3 py3-pip && \
     python3 -m venv /venv && \
+    /venv/bin/pip install --no-cache-dir -r /app/requirements.txt && \
     /venv/bin/pip install gunicorn
 
 COPY nginx.conf /etc/nginx/nginx.conf
